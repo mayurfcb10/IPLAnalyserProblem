@@ -63,5 +63,17 @@ public class IPLAnalyserTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIPLBatsmanData_ShouldReturnBatsmanWhoHitMaximumBoundaries() {
+        try {
+            iplAnalyser.loadIPLBattingData(IPL_MOST_RUNS_PATH);
+            String sortIPLBattingData = iplAnalyser.getPlayersWithMaximumBoundaries();
+            IPLBatsmanStats[] iplRuns = new Gson().fromJson(sortIPLBattingData, IPLBatsmanStats[].class);
+            Assert.assertEquals("Andre Russell", iplRuns[0].getPlayer());
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
