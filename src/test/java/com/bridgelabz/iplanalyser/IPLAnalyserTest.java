@@ -171,8 +171,20 @@ public class IPLAnalyserTest {
         iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
         String sortedIPLBowlingData = iplAnalyser.getPlayersWithHighestBowlingAverages();
         IPLBowlingStats[] iplBowlingAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
-        List<String> getAverageByBatAndBowl =iplAnalyser.getAverageByBatAndBall(iplBattingAverage, iplBowlingAverage);
+        List<String> getAverageByBatAndBowl =iplAnalyser.getPLayerDataByBatAndBall(iplBattingAverage, iplBowlingAverage);
         Assert.assertEquals("Andre Russell", getAverageByBatAndBowl.get(0));
+    }
+
+    @Test
+    public void givenIPLBowlerData_AndBatsmanData_shouldReturn_BestAllRounder() throws IPLAnalyserException {
+        iplAnalyser.loadIPLBattingData(IPL_MOST_RUNS_PATH);
+        String sortedIPLBattingData = iplAnalyser.getPlayersWithMaximumRunsAndBestAverages();
+        IPLBatsmanStats[] iplBattingData = new Gson().fromJson(sortedIPLBattingData, IPLBatsmanStats[].class);
+        iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
+        String sortedIPLBowlingData = iplAnalyser.getBowlerWithMaximumWicketsAndAverage();
+        IPLBowlingStats[] iplBowlingData = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
+        List<String> getDataByBatAndBowl =iplAnalyser.getPLayerDataByBatAndBall(iplBattingData, iplBowlingData);
+        Assert.assertEquals("Andre Russell", getDataByBatAndBowl.get(0));
     }
 }
 
