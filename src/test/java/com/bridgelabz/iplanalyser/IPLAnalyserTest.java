@@ -87,5 +87,17 @@ public class IPLAnalyserTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIPLBatsmanData_ShouldReturnBatsmanWhoHasBestAveragesWithGreatStrikeRate() {
+        try {
+            iplAnalyser.loadIPLBattingData(IPL_MOST_RUNS_PATH);
+            String sortIPLBattingData = iplAnalyser.getPlayersWithGreatAveragesWithBestStrikeRate();
+            IPLBatsmanStats[] iplRuns = new Gson().fromJson(sortIPLBattingData, IPLBatsmanStats[].class);
+            Assert.assertEquals("MS Dhoni", iplRuns[0].getPlayer());
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
