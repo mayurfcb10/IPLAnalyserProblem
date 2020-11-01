@@ -136,5 +136,13 @@ public class IPLAnalyserTest {
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
         Assert.assertEquals("Shivam Dube", iplRunsAverage[98].getPlayer());
     }
+
+    @Test
+    public void givenIPLBowlerData_shouldReturnBowler_withBestStrikeRate_withFoursAndSixes() throws IPLAnalyserException {
+        iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
+        String sortedIPLBowlingData = iplAnalyser.getBowlerWithBestStrikeRateWithFoursAndSixes();
+        IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
+        Assert.assertEquals("Krishnappa Gowtham", iplRunsAverage[0].getPlayer());
+    }
 }
 
