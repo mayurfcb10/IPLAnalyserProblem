@@ -275,7 +275,36 @@ public class IPLAnalyser {
         String pathForBatsmanWithHighestBoundaries = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLPlayerWithHighestCenturiesAndAverage.json";
         try (Writer writer = new FileWriter(pathForBatsmanWithHighestBoundaries)) {
             checkIPLCSVList();
-            Comparator<IPLBatsmanStats> iplBatsmanStatsComparator = Comparator.comparingDouble(IPLBatsmanStats::getCenturies).thenComparing(IPLBatsmanStats::getAverage);
+            Comparator<IPLBatsmanStats> iplBatsmanStatsComparator = Comparator.comparingDouble(IPLBatsmanStats::getCenturies)
+                                                                    .thenComparing(IPLBatsmanStats::getAverage)
+                                                                    .thenComparing(IPLBatsmanStats::getFifties);
+            return convertToJsonBastman(iplBatsmanStatsComparator, writer);
+        } catch (RuntimeException | IOException | IPLAnalyserException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
+
+    public List<String> getPLayerDataByBat(IPLBatsmanStats[] iplBattingData, IPLBatsmanStats[] iplBattingDataAverage) {
+        List<String> bestAveragePlayerList = new ArrayList<String>();
+        for (int i = 0; i < iplBattingData.length; i++) {
+            if (iplBattingData[iplBattingData.length - 1 - i].getPlayer().equals(iplBattingDataAverage[i].getPlayer())) {
+                bestAveragePlayerList.add(iplBattingDataAverage[i].getPlayer());
+                break;
+             }
+        }
+        return bestAveragePlayerList;
+    }
+
+    public String getPlayersWithNoCenturyAndFiftiesButGreatAverages() throws IPLAnalyserException {
+        String pathForBatsmanWithHighestBoundaries = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLPlayerWithNoCenturiesAndFiftiesButGoodAverage.json";
+        try (Writer writer = new FileWriter(pathForBatsmanWithHighestBoundaries)) {
+            checkIPLCSVList();
+            Comparator<IPLBatsmanStats> iplBatsmanStatsComparator = Comparator.comparingDouble(IPLBatsmanStats::getCenturies)
+                    .thenComparing(IPLBatsmanStats::getAverage)
+                    .thenComparing(IPLBatsmanStats::getFifties);
+            iplCSVListBastman.removeIf(century -> century.getCenturies() > 0 );
+            iplCSVListBastman.removeIf(century -> century.getFifties() > 0 );
             return convertToJsonBastman(iplBatsmanStatsComparator, writer);
         } catch (RuntimeException | IOException | IPLAnalyserException e) {
             throw new IPLAnalyserException(e.getMessage(),
