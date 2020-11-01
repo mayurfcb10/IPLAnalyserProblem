@@ -51,5 +51,17 @@ public class IPLAnalyserTest {
             IPLBatsmanStats[] iplRuns = new Gson().fromJson(sortedIPLBattingData, IPLBatsmanStats[].class);
             Assert.assertEquals("MS Dhoni", iplRuns[0].getPlayer());
     }
+
+    @Test
+    public void givenIPLBatsmanData_ShouldReturnTopStrikeRate() {
+        try {
+            iplAnalyser.loadIPLBattingData(IPL_MOST_RUNS_PATH);
+            String sortIPLBattingData = iplAnalyser.getPlayersWithTopStrikeRate();
+            IPLBatsmanStats[] iplRuns = new Gson().fromJson(sortIPLBattingData, IPLBatsmanStats[].class);
+            Assert.assertEquals(333.33, iplRuns[0].getStrikeRate(), 0.0);
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
