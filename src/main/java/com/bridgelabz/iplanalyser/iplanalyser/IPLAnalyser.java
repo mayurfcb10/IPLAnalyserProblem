@@ -122,4 +122,16 @@ public class IPLAnalyser {
              gson.toJson(iplCSVList, writer);
              return json;
          }
+
+    public String getPlayersWithMaximumStrikeRateWithBoundaries() throws IPLAnalyserException {
+        String pathForBatsmanWithHighestBoundaries = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLHighestStrikeRatewithBoundaries.json";
+        try (Writer writer = new FileWriter(pathForBatsmanWithHighestBoundaries)) {
+            checkIPLCSVList();
+            Comparator<IPLBatsmanStats> iplBatsmanStatsComparator = Comparator.comparingDouble(IPLBatsmanStats::getSixes).thenComparing(IPLBatsmanStats::getFours).thenComparing(IPLBatsmanStats::getAverage);
+            return convertToJson(iplBatsmanStatsComparator, writer);
+        } catch (RuntimeException | IOException | IPLAnalyserException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
 }
