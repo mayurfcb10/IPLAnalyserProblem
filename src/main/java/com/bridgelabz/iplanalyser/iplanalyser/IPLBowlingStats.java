@@ -7,7 +7,7 @@ public class IPLBowlingStats {
     @CsvBindByName (column = "POS")
     private String position;
 
-    @CsvBindByName (column = "Player")
+    @CsvBindByName (column = "PLAYER")
     private String player;
 
     @CsvBindByName (column = "Mat")
@@ -107,7 +107,7 @@ public class IPLBowlingStats {
         this.bestBowlingInnings = bestBowlingInnings;
     }
 
-    public double getAverage() {
+    public  double getAverage() {
         return average;
     }
 
