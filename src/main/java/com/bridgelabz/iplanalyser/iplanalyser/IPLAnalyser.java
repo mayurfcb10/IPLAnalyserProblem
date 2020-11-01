@@ -211,4 +211,18 @@ public class IPLAnalyser {
                     IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
         }
     }
+
+    public String getBowlerWithBestStrikeRateWithFoursAndSixes() throws IPLAnalyserException {
+        String pathForBowlingAverage = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLBowlerBestStrikeRateWith5WAnd4W.json";
+        try (Writer writer = new FileWriter(pathForBowlingAverage)) {
+            checkIPLCSVListBowler();
+            Comparator<IPLBowlingStats> iplBowlingStatsComparator = Comparator.comparingDouble(IPLBowlingStats::getStrikeRate)
+                                                                    .thenComparing(IPLBowlingStats::getFiveWicket)
+                                                                    .thenComparing(IPLBowlingStats::getFourWicket);
+            return convertToJsonBowler(iplBowlingStatsComparator, writer);
+        } catch (RuntimeException | IOException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
 }
