@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bridgelabz.iplanalyser.IPLAnalyserTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-11-01T06:47:02" hostname="MAYURFCB" time="0.659">
+  <properties/>
+  <testcase name="printWelcomeMessage" classname="com.bridgelabz.iplanalyser.IPLAnalyserTest" time="0.005"/>
+  <testcase name="givenFilePathForBatsmanshouldReturnCorrectRecords" classname="com.bridgelabz.iplanalyser.IPLAnalyserTest" time="0.561"/>
+  <testcase name="givenFilePathForBowlershouldReturnCorrectRecords" classname="com.bridgelabz.iplanalyser.IPLAnalyserTest" time="0.09"/>
+  <system-out><![CDATA[Welcome to the IPL Analyser Problem
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
