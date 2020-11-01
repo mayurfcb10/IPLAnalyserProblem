@@ -258,7 +258,7 @@ public class IPLAnalyser {
         }
     }
 
-    public List<String> getAverageByBatAndBall(IPLBatsmanStats[] iplBattingAverage, IPLBowlingStats[] iplBowlingAverage) {
+    public List<String> getPLayerDataByBatAndBall(IPLBatsmanStats[] iplBattingAverage, IPLBowlingStats[] iplBowlingAverage) {
     List<String> bestAveragePlayerList = new ArrayList<String>();
         for (IPLBatsmanStats iplBatsman: iplBattingAverage) {
             for(IPLBowlingStats iplBowler : iplBowlingAverage)
