@@ -20,12 +20,12 @@ public class IPLAnalyser {
         System.out.println("Welcome to the IPL Analyser Problem");
     }
 
-    List<IPLBatsmanStats> IPLCSVList = null;
+    List<IPLBatsmanStats> iplCSVList = null;
     @SuppressWarnings("unchecked")
     public int loadIPLBattingData(String csvFilePath) throws IPLAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-            IPLCSVList = CSVBuilderFactory.createCSVBuilder().getCSVFileList(reader, IPLBatsmanStats.class);
-            return IPLCSVList.size();
+            iplCSVList = CSVBuilderFactory.createCSVBuilder().getCSVFileList(reader, IPLBatsmanStats.class);
+            return iplCSVList.size();
         } catch (IOException | CSVBuilderException e) {
             throw new IPLAnalyserException(e.getMessage(),
                     IPLAnalyserException.ExceptionType.IPL_FILE_PROBLEM);
@@ -38,14 +38,46 @@ public class IPLAnalyser {
     @SuppressWarnings("unchecked")
     public int loadIPLBowlingData(String csvFilePath) throws IPLAnalyserException   {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-            IPLCSVList = CSVBuilderFactory.createCSVBuilder().getCSVFileList(reader, IPLBatsmanStats.class);
-            return IPLCSVList.size();
+            iplCSVList = CSVBuilderFactory.createCSVBuilder().getCSVFileList(reader, IPLBatsmanStats.class);
+            return iplCSVList.size();
         } catch (IOException | CSVBuilderException e) {
             throw new IPLAnalyserException(e.getMessage(),
                     IPLAnalyserException.ExceptionType.IPL_FILE_PROBLEM);
         } catch (RuntimeException e) {
             throw new IPLAnalyserException(e.getMessage(),
                     IPLAnalyserException.ExceptionType.IPL_HEADER_DELIMETER_PROBLEM);
+        }
+    }
+
+    public String getPlayersWithHighestAverages() throws IPLAnalyserException  {
+        String pathForBatsmanAverage = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLBattingAverage.json";
+        try (Writer writer = new FileWriter(pathForBatsmanAverage)) {
+            if (iplCSVList == null || iplCSVList.size() == 0) {
+                throw new IPLAnalyserException("No data", IPLAnalyserException.ExceptionType.NO_SUCH_DATA);
+            }
+            Comparator<IPLBatsmanStats> censusComparator = Comparator.comparingDouble(IPLBatsmanStats::getAverage);
+            this.descendingSorting(censusComparator);
+            String json = new Gson().toJson(iplCSVList);
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(iplCSVList, writer);
+            return json;
+
+        } catch (RuntimeException | IOException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
+
+    private void descendingSorting(Comparator<IPLBatsmanStats> iplComparator) {
+        for (int i = 0; i < iplCSVList.size() - 1; i++) {
+            for (int j = 0; j < iplCSVList.size() - i - 1; j++) {
+                IPLBatsmanStats compareList1 = iplCSVList.get(j);
+                IPLBatsmanStats compareList2 = iplCSVList.get(j + 1);
+                if (iplComparator.compare(compareList1, compareList2) < 0) {
+                    iplCSVList.set(j, compareList2);
+                    iplCSVList.set(j + 1, compareList1);
+                }
+            }
         }
     }
 }
