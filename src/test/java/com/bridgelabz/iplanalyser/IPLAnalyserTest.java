@@ -47,8 +47,8 @@ public class IPLAnalyserTest {
     @Test
     public void givenIPLBatsman_DataShouldReturnBatsmanWithHighestAverage() throws IPLAnalyserException {
             iplAnalyser.loadIPLBattingData(IPL_MOST_RUNS_PATH);
-            String sortIPLData = iplAnalyser.getPlayersWithTopAverages();
-            IPLBatsmanStats[] iplRuns = new Gson().fromJson(sortIPLData, IPLBatsmanStats[].class);
+            String sortedIPLBattingData = iplAnalyser.getPlayersWithHighestAverages();
+            IPLBatsmanStats[] iplRuns = new Gson().fromJson(sortedIPLBattingData, IPLBatsmanStats[].class);
             Assert.assertEquals("MS Dhoni", iplRuns[0].getPlayer());
     }
 }
