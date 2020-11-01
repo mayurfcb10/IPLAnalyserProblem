@@ -118,7 +118,7 @@ public class IPLAnalyserTest {
         iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
         String sortedIPLBowlingData = iplAnalyser.getPlayersWithHighestBowlingAverages();
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
-        Assert.assertEquals("Krishnappa Gowtham", iplRunsAverage[0].getPlayer());
+        Assert.assertEquals("Anukul Roy", iplRunsAverage[iplRunsAverage.length - 1].getPlayer());
     }
 
     @Test
@@ -126,7 +126,7 @@ public class IPLAnalyserTest {
         iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
         String sortedIPLBowlingData = iplAnalyser.getBowlerWithHighestStrikeRate();
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
-        Assert.assertEquals("Krishnappa Gowtham", iplRunsAverage[0].getPlayer());
+        Assert.assertEquals("Alzarri Joseph", iplRunsAverage[iplRunsAverage.length -1].getPlayer());
     }
 
     @Test
@@ -134,7 +134,7 @@ public class IPLAnalyserTest {
         iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
         String sortedIPLBowlingData = iplAnalyser.getBowlerWithBestEconomy();
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
-        Assert.assertEquals("Shivam Dube", iplRunsAverage[98].getPlayer());
+        Assert.assertEquals("Shivam Dube", iplRunsAverage[iplRunsAverage.length - 1].getPlayer());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class IPLAnalyserTest {
         iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
         String sortedIPLBowlingData = iplAnalyser.getBowlerWithBestStrikeRateWithFoursAndSixes();
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
-        Assert.assertEquals("Krishnappa Gowtham", iplRunsAverage[0].getPlayer());
+        Assert.assertEquals("Alzarri Joseph", iplRunsAverage[iplRunsAverage.length -1].getPlayer());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class IPLAnalyserTest {
         iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
         String sortedIPLBowlingData = iplAnalyser.getBowlerWithBestAverageAndStrikeRate();
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
-        Assert.assertEquals("Krishnappa Gowtham", iplRunsAverage[0].getPlayer());
+        Assert.assertEquals("Alzarri Joseph", iplRunsAverage[iplRunsAverage.length -1].getPlayer());
     }
 
     @Test
@@ -158,7 +158,7 @@ public class IPLAnalyserTest {
         iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
         String sortedIPLBowlingData = iplAnalyser.getBowlerWithMaximumWicketsAndAverage();
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
-        Assert.assertEquals("Imran Tahir", iplRunsAverage[0].getPlayer());
+        Assert.assertEquals("Anukul Roy", iplRunsAverage[iplRunsAverage.length - 1].getPlayer());
     }
 }
 
