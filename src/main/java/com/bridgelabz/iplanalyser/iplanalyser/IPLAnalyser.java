@@ -80,4 +80,23 @@ public class IPLAnalyser {
             }
         }
     }
+
+    public String getPlayersWithTopStrikeRate() throws IPLAnalyserException {
+        String pathForBatsmanStrikeRate = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLStrikeRate.json";
+        try (Writer writer = new FileWriter(pathForBatsmanStrikeRate)) {
+            if (iplCSVList == null || iplCSVList.size() == 0) {
+                throw new IPLAnalyserException("No data", IPLAnalyserException.ExceptionType.NO_SUCH_DATA);
+            }
+            Comparator<IPLBatsmanStats> censusComparator = Comparator.comparingDouble(IPLBatsmanStats::getStrikeRate);
+            this.descendingSorting(censusComparator);
+            String json = new Gson().toJson(iplCSVList);
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(iplCSVList, writer);
+            return json;
+
+        } catch (RuntimeException | IOException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
 }
