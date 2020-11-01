@@ -49,6 +49,24 @@ public class IPLAnalyser {
         }
     }
 
+    public String getJsonString(String path) throws IPLAnalyserException {
+        try (Writer writer = new FileWriter(path)) {
+            if (iplCSVList == null || iplCSVList.size() == 0) {
+                throw new IPLAnalyserException("No data", IPLAnalyserException.ExceptionType.NO_SUCH_DATA);
+            }
+            Comparator<IPLBatsmanStats> censusComparator = Comparator.comparingDouble(runs -> runs.getAverage());
+            this.descendingSorting(censusComparator);
+            String json = new Gson().toJson(iplCSVList);
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(iplCSVList, writer);
+            return json;
+
+        } catch (RuntimeException | IOException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
+
     public String getPlayersWithHighestAverages() throws IPLAnalyserException  {
         String pathForBatsmanAverage = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLBattingAverage.json";
         try (Writer writer = new FileWriter(pathForBatsmanAverage)) {
@@ -56,6 +74,25 @@ public class IPLAnalyser {
                 throw new IPLAnalyserException("No data", IPLAnalyserException.ExceptionType.NO_SUCH_DATA);
             }
             Comparator<IPLBatsmanStats> censusComparator = Comparator.comparingDouble(IPLBatsmanStats::getAverage);
+            this.descendingSorting(censusComparator);
+            String json = new Gson().toJson(iplCSVList);
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(iplCSVList, writer);
+            return json;
+
+        } catch (RuntimeException | IOException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
+
+    public String getPlayersWithTopStrikeRate() throws IPLAnalyserException {
+        String pathForBatsmanStrikeRate = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLStrikeRate.json";
+        try (Writer writer = new FileWriter(pathForBatsmanStrikeRate)) {
+            if (iplCSVList == null || iplCSVList.size() == 0) {
+                throw new IPLAnalyserException("No data", IPLAnalyserException.ExceptionType.NO_SUCH_DATA);
+            }
+            Comparator<IPLBatsmanStats> censusComparator = Comparator.comparingDouble(IPLBatsmanStats::getStrikeRate);
             this.descendingSorting(censusComparator);
             String json = new Gson().toJson(iplCSVList);
             Gson gson = new GsonBuilder().create();
@@ -81,22 +118,22 @@ public class IPLAnalyser {
         }
     }
 
-    public String getPlayersWithTopStrikeRate() throws IPLAnalyserException {
-        String pathForBatsmanStrikeRate = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLStrikeRate.json";
-        try (Writer writer = new FileWriter(pathForBatsmanStrikeRate)) {
-            if (iplCSVList == null || iplCSVList.size() == 0) {
-                throw new IPLAnalyserException("No data", IPLAnalyserException.ExceptionType.NO_SUCH_DATA);
-            }
-            Comparator<IPLBatsmanStats> censusComparator = Comparator.comparingDouble(IPLBatsmanStats::getStrikeRate);
-            this.descendingSorting(censusComparator);
-            String json = new Gson().toJson(iplCSVList);
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(iplCSVList, writer);
-            return json;
+    public String getPlayersWithMaximumBoundaries() throws IPLAnalyserException {
+            String pathForBatsmanWithHighestBoundaries = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLHighestBoundaries.json";
+            try (Writer writer = new FileWriter(pathForBatsmanWithHighestBoundaries)) {
+                if (iplCSVList == null || iplCSVList.size() == 0) {
+                    throw new IPLAnalyserException("No data", IPLAnalyserException.ExceptionType.NO_SUCH_DATA);
+                }
+                Comparator<IPLBatsmanStats> censusComparator = Comparator.comparingDouble(iplboundaries -> iplboundaries.getSixes() + iplboundaries.getFours());
+                this.descendingSorting(censusComparator);
+                String json = new Gson().toJson(iplCSVList);
+                Gson gson = new GsonBuilder().create();
+                gson.toJson(iplCSVList, writer);
+                return json;
 
-        } catch (RuntimeException | IOException e) {
-            throw new IPLAnalyserException(e.getMessage(),
-                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
-        }
-    }
+            } catch (RuntimeException | IOException | IPLAnalyserException e) {
+                throw new IPLAnalyserException(e.getMessage(),
+                        IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+            }
+         }
 }
