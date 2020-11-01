@@ -270,4 +270,16 @@ public class IPLAnalyser {
         }
         return bestAveragePlayerList;
     }
+
+    public String getPlayersWithHighestCenturyAndGreatAverages() throws IPLAnalyserException {
+        String pathForBatsmanWithHighestBoundaries = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLPlayerWithHighestCenturiesAndAverage.json";
+        try (Writer writer = new FileWriter(pathForBatsmanWithHighestBoundaries)) {
+            checkIPLCSVList();
+            Comparator<IPLBatsmanStats> iplBatsmanStatsComparator = Comparator.comparingDouble(IPLBatsmanStats::getCenturies).thenComparing(IPLBatsmanStats::getAverage);
+            return convertToJsonBastman(iplBatsmanStatsComparator, writer);
+        } catch (RuntimeException | IOException | IPLAnalyserException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
 }
