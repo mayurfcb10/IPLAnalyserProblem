@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -214,7 +215,7 @@ public class IPLAnalyser {
         }
     }
 
-    public String getBowlerWithBestStrikeRateWithFoursAndSixes() throws IPLAnalyserException {
+    public String getBowlerWithBestStrikeRateWithFoursAndFifers() throws IPLAnalyserException {
         String pathForBowlingAverage = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLBowlerBestStrikeRateWith5WAnd4W.json";
         try (Writer writer = new FileWriter(pathForBowlingAverage)) {
             checkIPLCSVListBowler();
@@ -255,5 +256,18 @@ public class IPLAnalyser {
             throw new IPLAnalyserException(e.getMessage(),
                     IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
         }
+    }
+
+    public List<String> getAverageByBatAndBall(IPLBatsmanStats[] iplBattingAverage, IPLBowlingStats[] iplBowlingAverage) {
+    List<String> bestAveragePlayerList = new ArrayList<String>();
+        for (IPLBatsmanStats iplBatsman: iplBattingAverage) {
+            for(IPLBowlingStats iplBowler : iplBowlingAverage)
+            {
+                if(iplBatsman.getPlayer().equals(iplBowler.getPlayer())){
+                    bestAveragePlayerList.add(iplBowler.getPlayer());
+                }
+            }
+        }
+        return bestAveragePlayerList;
     }
 }
