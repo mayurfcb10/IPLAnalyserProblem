@@ -152,5 +152,13 @@ public class IPLAnalyserTest {
         IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
         Assert.assertEquals("Krishnappa Gowtham", iplRunsAverage[0].getPlayer());
     }
+
+    @Test
+    public void givenIPLBowlerData_shouldReturn_BowlerwithMaximumWicketsAndGreatBowlingAverage() throws IPLAnalyserException {
+        iplAnalyser.loadIPLBowlingData(IPL_MOST_WICKET_PATH);
+        String sortedIPLBowlingData = iplAnalyser.getBowlerWithMaximumWicketsAndAverage();
+        IPLBowlingStats[] iplRunsAverage = new Gson().fromJson(sortedIPLBowlingData, IPLBowlingStats[].class);
+        Assert.assertEquals("Imran Tahir", iplRunsAverage[0].getPlayer());
+    }
 }
 
