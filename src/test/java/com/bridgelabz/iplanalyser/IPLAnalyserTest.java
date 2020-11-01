@@ -198,5 +198,13 @@ public class IPLAnalyserTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIPLBattingData_shouldReturn_TopAverageBatsman_WithoutCenturyOrHalfCentury() throws IPLAnalyserException {
+        iplAnalyser.loadIPLBattingData(IPL_MOST_RUNS_PATH);
+        String sortedIPLBattingDataCentury = iplAnalyser.getPlayersWithNoCenturyAndFiftiesButGreatAverages();
+        IPLBatsmanStats[] iplBattingData = new Gson().fromJson(sortedIPLBattingDataCentury, IPLBatsmanStats[].class);
+        Assert.assertEquals("Marcus Stoinis", iplBattingData[0].getPlayer());
+    }
 }
 
