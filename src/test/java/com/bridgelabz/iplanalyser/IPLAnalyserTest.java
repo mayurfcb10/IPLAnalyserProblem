@@ -186,5 +186,17 @@ public class IPLAnalyserTest {
         List<String> getDataByBatAndBowl =iplAnalyser.getPLayerDataByBatAndBall(iplBattingData, iplBowlingData);
         Assert.assertEquals("Andre Russell", getDataByBatAndBowl.get(0));
     }
+
+    @Test
+    public void givenIPLBattingData_shouldreturn_PlayerWithHighestCenturyWithBestAverage() {
+        try {
+            iplAnalyser.loadIPLBattingData(IPL_MOST_RUNS_PATH);
+            String sortIPLBattingData = iplAnalyser.getPlayersWithHighestCenturyAndGreatAverages();
+            IPLBatsmanStats[] iplBattingData = new Gson().fromJson(sortIPLBattingData, IPLBatsmanStats[].class);
+            Assert.assertEquals("David Warner ", iplBattingData[0].getPlayer());
+        } catch (IPLAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
