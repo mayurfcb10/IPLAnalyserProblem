@@ -134,4 +134,16 @@ public class IPLAnalyser {
                     IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
         }
     }
+
+    public String getPlayersWithGreatAveragesWithBestStrikeRate() throws IPLAnalyserException {
+        String pathForBatsmanWithHighestBoundaries = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLHighestAverageWithBestStrikeRate.json";
+        try (Writer writer = new FileWriter(pathForBatsmanWithHighestBoundaries)) {
+            checkIPLCSVList();
+            Comparator<IPLBatsmanStats> iplBatsmanStatsComparator = Comparator.comparingDouble(IPLBatsmanStats::getAverage).thenComparing(IPLBatsmanStats::getStrikeRate);
+            return convertToJson(iplBatsmanStatsComparator, writer);
+        } catch (RuntimeException | IOException | IPLAnalyserException e) {
+            throw new IPLAnalyserException(e.getMessage(),
+                    IPLAnalyserException.ExceptionType.FILE_OR_HEADER_PROBLEM);
+        }
+    }
 }
