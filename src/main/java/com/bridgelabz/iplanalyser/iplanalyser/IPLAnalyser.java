@@ -168,11 +168,11 @@ public class IPLAnalyser {
         }
     }
 
-    public String convertToJsonBowler(Comparator<IPLBowlingStats> censusComparator, Writer writer) {
-        this.descendingSortingBowler(censusComparator);
+    public String convertToJsonBowler(Comparator<IPLBowlingStats> iplComparator, Writer writer) {
+        this.descendingSortingBowler(iplComparator);
         String json = new Gson().toJson(iplCSVListBowler);
         Gson gson = new GsonBuilder().create();
-        gson.toJson(iplCSVListBastman, writer);
+        gson.toJson(iplCSVListBowler, writer);
         return json;
     }
 
@@ -181,6 +181,7 @@ public class IPLAnalyser {
         try (Writer writer = new FileWriter(pathForBowlingAverage)) {
             checkIPLCSVListBowler();
             Comparator<IPLBowlingStats> iplBowlingStatsComparator = Comparator.comparingDouble(IPLBowlingStats::getAverage);
+            iplCSVListBowler.removeIf(average -> average.getAverage() == 0 );
             return convertToJsonBowler(iplBowlingStatsComparator, writer);
         } catch (RuntimeException | IOException e) {
             throw new IPLAnalyserException(e.getMessage(),
@@ -193,6 +194,7 @@ public class IPLAnalyser {
         try (Writer writer = new FileWriter(pathForBowlingAverage)) {
             checkIPLCSVListBowler();
             Comparator<IPLBowlingStats> iplBowlingStatsComparator = Comparator.comparingDouble(IPLBowlingStats::getStrikeRate);
+            iplCSVListBowler.removeIf(strikeRate -> strikeRate.getStrikeRate() == 0 );
             return convertToJsonBowler(iplBowlingStatsComparator, writer);
         } catch (RuntimeException | IOException e) {
             throw new IPLAnalyserException(e.getMessage(),
@@ -219,6 +221,7 @@ public class IPLAnalyser {
             Comparator<IPLBowlingStats> iplBowlingStatsComparator = Comparator.comparingDouble(IPLBowlingStats::getStrikeRate)
                                                                     .thenComparing(IPLBowlingStats::getFiveWicket)
                                                                     .thenComparing(IPLBowlingStats::getFourWicket);
+            iplCSVListBowler.removeIf(strikeRate -> strikeRate.getStrikeRate() == 0 );
             return convertToJsonBowler(iplBowlingStatsComparator, writer);
         } catch (RuntimeException | IOException e) {
             throw new IPLAnalyserException(e.getMessage(),
@@ -232,6 +235,7 @@ public class IPLAnalyser {
             checkIPLCSVListBowler();
             Comparator<IPLBowlingStats> iplBowlingStatsComparator = Comparator.comparingDouble(IPLBowlingStats::getStrikeRate)
                                                                             .thenComparing(IPLBowlingStats::getAverage);
+            iplCSVListBowler.removeIf(average -> average.getAverage() == 0 );
             return convertToJsonBowler(iplBowlingStatsComparator, writer);
         } catch (RuntimeException | IOException e) {
             throw new IPLAnalyserException(e.getMessage(),
@@ -240,11 +244,12 @@ public class IPLAnalyser {
     }
 
     public String getBowlerWithMaximumWicketsAndAverage() throws IPLAnalyserException {
-        String pathForBowlingAverage = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLBowlerBestAverageStrikeRateAndBestStrike.json";
+        String pathForBowlingAverage = "E:\\Mayur Zope Contents\\Downloads\\IPLAnalyser\\src\\test\\resources\\IPLBowlerBestMaximumWicketsandGreatAverage.json";
         try (Writer writer = new FileWriter(pathForBowlingAverage)) {
             checkIPLCSVListBowler();
             Comparator<IPLBowlingStats> iplBowlingStatsComparator = Comparator.comparingDouble(IPLBowlingStats::getWickets)
                     .thenComparing(IPLBowlingStats::getAverage);
+            iplCSVListBowler.removeIf(average -> average.getAverage() == 0);
             return convertToJsonBowler(iplBowlingStatsComparator, writer);
         } catch (RuntimeException | IOException e) {
             throw new IPLAnalyserException(e.getMessage(),
